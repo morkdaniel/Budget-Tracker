@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mork Budget Tracker</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- For future charts -->
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar Navigation -->
+    <aside>
+      <nav>
+        <ul>
+          <li><button class="tab-btn active" data-tab="dashboard">📋 Dashboard</button></li>
+          <li><button class="tab-btn" data-tab="stats">📊 Statistics</button></li>
+          <li><button class="tab-btn" data-tab="reflection">📝 Reflection</button></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main>
+      <!-- Dashboard Tab -->
+      <section id="dashboard" class="tab-content active">
+        <h1>Mork Budget Tracker</h1>
+
+        <div class="bento-box" id="remaining">
+          <h2>Remaining Budget</h2>
+          <p id="remaining-budget">₱0</p>
+        </div>
+
+        <div class="bento-box" id="add-expense">
+          <h3>Add Entry</h3>
+          <form id="expense-form">
+            <input type="text" id="expense-name" placeholder="Description" required />
+            <input type="number" id="expense-amount" placeholder="Amount (use negative for spending)" required />
+            <input type="text" id="expense-category" placeholder="Category (optional)" />
+            <input type="date" id="expense-date" required />
+            <button type="submit">Add</button>
+          </form>
+        </div>
+
+        <div class="bento-box" id="history">
+          <h3>History</h3>
+          <ul id="expense-list"></ul>
+        </div>
+      </section>
+
+      <!-- Statistics Tab -->
+      <section id="stats" class="tab-content">
+        <h2>Statistics</h2>
+        <div class="bento-box">
+          <h3>Spending by Category</h3>
+          <canvas id="categoryChart"></canvas>
+        </div>
+
+        <div class="bento-box">
+          <h3>Weekly Trend</h3>
+          <canvas id="trendChart"></canvas>
+        </div>
+      </section>
+
+      <!-- Reflection Tab -->
+      <section id="reflection" class="tab-content">
+        <h2>Weekly Budget Reflection</h2>
+        <div class="bento-box" id="weekly-reflection">
+          <textarea id="weekly-thoughts" placeholder="Write about your budget habits, regrets, or wins this week..."></textarea>
+          <button id="save-reflection">Save Reflection</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="firebase-init.js"></script>
+  <script type="module" src="js/script.js"></script>
+  <script>
+    // Tab switching logic (keep this as is)
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.forEach(b => b.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+
+        btn.classList.add('active');
+        const target = btn.getAttribute('data-tab');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
